@@ -1,4 +1,4 @@
 raw-world
 =========
 
-Now this is just my college graduation design.
+Currently this is just my college graduation design. The project is by Python, and running it need pyqtgraph library.
