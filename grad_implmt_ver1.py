@@ -422,10 +422,10 @@ class EnvAndLife(object):
 
     def updateData(self):
         #self.envEnergy()
-        #self.Producer()
+        self.Producer()
         self.Consumer()
         self.Decomposer()
-        self.envEnergy()
+        #self.envEnergy()
         self.envEnergy() # add more envEnergy() to diffuse the energy the dead life left
         self.mergeData()
         self.updatePopulation()
