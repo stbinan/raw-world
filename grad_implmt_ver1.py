@@ -2,10 +2,10 @@
 #! /usr/bin/env python2
 
 """
-This implementation at first was experimented with pyqtgraph.examples 
+This implementation at first experiment by pyqtgraph.examples 
 graphics item - ImageItem - video.
 
-Examples from Zencode.com about PyQt4 Widget helped me a lot.
+Examples from Zencode.com about PyQt4 Widget help me a lot.
 """
 
 #from PyQt4 import QtCore, QtGui
@@ -17,6 +17,7 @@ import pyqtgraph.ptime as ptime
 #import sys
 import copy
 
+#QtGui.QApplication.setGraphicsSystem ("opengl") #it seems get slower...
 qt_app = QtGui.QApplication([])
 #qt_app = QApplication(sys.argv)
 
@@ -81,7 +82,7 @@ class WidgetMore(QtGui.QWidget):
         ## lock the aspect ratio so pixels are always square
         view.setAspectLocked(True)
         ## Set initial view bounds
-        view.setRange(QtCore.QRectF(0, 0, WID, LEN))
+        view.setRange(QtCore.QRectF(0, 0, LEN, WID))
         view.addItem(img)
 
     def buttonClicked(self):
@@ -109,16 +110,16 @@ class WidgetMore(QtGui.QWidget):
         qt_app.exec_()
 
 ALEN = 100
-AWID = 100 #ALEN and AWID decide the frame size of the windows, with LEN and WID we can zone in and zone out the size of a cell
-LEN = int(ALEN*1.0)
-WID = int(AWID*1.0)
+AWID = 200 #ALEN and AWID decide the frame size of the windows, with LEN and WID we can zone in and zone out the size of a cell
+LEN = int(AWID*1.0) #LEN*WID is the absolute amount of cells.
+WID = int(ALEN*1.0)
 LIGHTBIT = [255,255,255,20]
 PRODBIT = [0,255,0,20]
 CONSUBIT = [255,0,0,20]
 DECOMBIT = [0,0,255,60] #the amount of decomposer is constant, and it doesn't have lifespan.
-PMATURE = 100
+PMATURE = 100 #mature threshold of producer
 CMATURE = 180
-PLIFESPAN = 160
+PLIFESPAN = 160 #lifespan threshold of producer
 CLIFESPAN = 240
 
 updatect = 0 #for testing speed
@@ -212,7 +213,7 @@ class EnvAndLife(object):
 
     def lifeMove(self, prod1tp, prod1, isConsu=False): #Assignment Name is from producer.
         for i in prod1.keys():
-            rnmove = np.random.randint(4) #four direction, may add another as the object may not move
+            rnmove = np.random.randint(4)
             if rnmove in (0,2):
                 if isConsu:
                     positp = (i[1] + rnmove*2 - 2)%WID #(-2,2)
@@ -430,18 +431,14 @@ class EnvAndLife(object):
         self.mergeData()
         self.updatePopulation()
         #img.setImage(self.envdata1)
-        '''
         ##tft
         for i in self.mixenv:
             for j in i:
                 if j[3] > 255:
                     print('orz: ', j)
                     print('PRODBIT: ',PRODBIT)
-        '''
         #print(self.mixenv) ##tft
         img.setImage(self.mixenv)
-        
-        '''
         #for testing the speed of the program
         global updatect
         updatect += 1
@@ -449,7 +446,6 @@ class EnvAndLife(object):
             now = ptime.time()
             print('Run time: ', now - updatetime)
             app.timer.stop()
-        '''
 
 
 
