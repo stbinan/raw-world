@@ -279,7 +279,7 @@ class EnvAndLife(object):
                             prod1tp2[positp][3] = PRODBIT[3]
                             prod1tp[i][3] += envDataTransf(i)[3] - PRODBIT[3]
                         else:
-                            prod1tp2[positp][3] += envDataTransf(i)[3]
+                            prod1tp2[positp][3] += PRODBIT[3]
                             prod1tp[i][3] += envDataTransf(i)[3] - PRODBIT[3]
                         envDataTransf(i)[3] = 0
                         if envExist(positp):
